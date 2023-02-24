@@ -1,36 +1,24 @@
-import React,{Component} from 'react';
-import { Title } from './components/Title';
-import { SearchForm } from './components/SearchForm';
+import React, {Component} from 'react';
+import { Routes, Route } from 'react-router-dom'
+import { Home } from './pages/Home';
+import { Detail } from './pages/Detail';
+import { NotFound } from './pages/NotFound';
 import './App.css';
 import 'bulma/css/bulma.css'
 
+// /detail/123
 class App extends Component {
-  state = { results: [] }
-
-  _handleResults = (results) => {
-    this.setState ({ results})
-  }
-  _renderResults(){
-    const { results } = this.state
-    return results.map(movie => {
-      return <p key={movie.imdbID}>{movie.Title}</p>
-    })
-  }
-  render(){
-    return(
+  render() {
+    return (
       <div className="App">
-        <Title> Search Movies </Title>
-        <div className='SearchForm-wrapper'>
-        <SearchForm onResults={this._handleResults}></SearchForm>
-        </div>
-        {this.state.results.length === 0
-         ?<p>Sin resultado</p>
-         : this._renderResults()
-        } 
+        <Routes>
+          <Route exact path='/' element={<Home/>} />
+          <Route path='/detail/:movieId' element={<Detail/>} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
       </div>
     );
   }
-  
 }
 
 export default App;
